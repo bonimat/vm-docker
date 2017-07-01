@@ -1,1 +1,0 @@
-{"virtualbox":{"/host_data":{"guestpath":"/host_data","hostpath":"/home/matteo","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/matteo/Scrivania/git/docker","disabled":false,"__vagrantfile":true}}}
