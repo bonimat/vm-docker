@@ -98,7 +98,14 @@ Vagrant.configure("2") do |config|
      apt-get upgrade -y
      apt-get update
      apt-get upgrade
-     apt-get install -y ubuntu-gnome-desktop
-     setxkbmap it
+     apt-get install -y gdm
+     apt-get install -y --no-install-recommends ubuntu-gnome-desktop
+     apt-get install -y firefox
+     # show files on desktop
+     gsettings set org.gnome.desktop.background show-desktop-icons true
+     # show shares on desktop
+     gsettings set org.gnome.nautilus.desktop volumes-visible true
+     # git clone https://github.com/bonimat/puppet-desktop.git ~/puppet-desktop
+     # puppet apply --modulepath=~/puppet-desktop/apps-module site.pp
   SHELL
 end
