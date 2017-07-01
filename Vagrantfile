@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "DockerMachine"
+  config.vm.box = "bento/ubuntu-16.04"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # NOTE: This will enable public access to the opened port
-  # config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 80, host: 8080
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   # config.vm.network "private_network", ip: "192.168.33.10"
-	config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
-	config.vm.synced_folder "/home/matteo","/host_data"
+  config.vm.synced_folder "/home/matteo", "/host_data"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -64,10 +64,11 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |vb|
    # Name 
-     vb.name = "Docker Machine"
+     vb.name = "DockerMachine"
    # Display the VirtualBox GUI when booting the machine
-     # vb.gui = true
-     vb.cpu = 2
+     vb.gui = true
+     
+     vb.cpus = 2
      # Customize the amount of memory on the VM:
      vb.memory = "4096"
   end
@@ -89,8 +90,15 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
-	config.vm.provision "shell", inline: <<-SHELL
-  	  apt-get update
-  	  apt-get install -y apache2
-        SHELL
+  config.vm.provision "shell", inline: <<-SHELL
+     wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb
+     dpkg -i puppetlabs-release-pc1-xenial.deb
+     apt-get update
+     apt-get install -y puppet-agent     
+     apt-get upgrade -y
+     apt-get update
+     apt-get upgrade
+     apt-get install -y ubuntu-gnome-desktop
+     setxkbmap it
+  SHELL
 end
