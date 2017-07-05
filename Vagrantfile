@@ -95,17 +95,18 @@ Vagrant.configure("2") do |config|
      dpkg -i puppetlabs-release-pc1-xenial.deb
      apt-get update
      apt-get install -y puppet-agent     
-     apt-get upgrade -y
-     apt-get update
-     apt-get upgrade
+     apt-get upgrade -y  
      apt-get install -y gdm
      apt-get install -y --no-install-recommends ubuntu-gnome-desktop
+     apt-get install -y menu
      apt-get install -y firefox
      # show files on desktop
+     apt install gnome-desktop-environment
+     apt-get install language-pack-it-base
+     apt-get install language-pack-gnome-it-base
      gsettings set org.gnome.desktop.background show-desktop-icons true
      # show shares on desktop
      gsettings set org.gnome.nautilus.desktop volumes-visible true
-     # git clone https://github.com/bonimat/puppet-desktop.git ~/puppet-desktop
-     # puppet apply --modulepath=~/puppet-desktop/apps-module site.pp
-  SHELL
+     gsettings set org.gnome.desktop.default-applications.terminal exec terminator
+   SHELL
 end
