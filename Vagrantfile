@@ -63,14 +63,21 @@ Vagrant.configure("2") do |config|
   # information on available options.
 
   config.vm.provider "virtualbox" do |vb|
-   # Name 
+   # Name
      vb.name = "DockerMachine"
    # Display the VirtualBox GUI when booting the machine
      vb.gui = true
-     
+
      vb.cpus = 2
      # Customize the amount of memory on the VM:
      vb.memory = "4096"
+
+     # Set the video memory to 128Mb:
+     vb.customize ["modifyvm", :id, "--vram", "128"]
+
+     # Enable 3D acceleration:
+     vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+
   end
 
 
@@ -94,19 +101,22 @@ Vagrant.configure("2") do |config|
      wget https://apt.puppetlabs.com/puppetlabs-release-pc1-xenial.deb
      dpkg -i puppetlabs-release-pc1-xenial.deb
      apt-get update
-     apt-get install -y puppet-agent     
-     apt-get upgrade -y  
+     # con puppet-agent viene installato anche il comando puppet
+     apt-get install -y puppet-agent
+     apt-get upgrade -y
      apt-get install -y gdm
      apt-get install -y --no-install-recommends ubuntu-gnome-desktop
      apt-get install -y menu
      apt-get install -y firefox
      # show files on desktop
      apt install gnome-desktop-environment
-     apt-get install language-pack-it-base
-     apt-get install language-pack-gnome-it-base
+     apt-get install -y language-pack-it-base
+     apt-get install -y language-pack-gnome-it-base
      gsettings set org.gnome.desktop.background show-desktop-icons true
      # show shares on desktop
      gsettings set org.gnome.nautilus.desktop volumes-visible true
      gsettings set org.gnome.desktop.default-applications.terminal exec terminator
+     # le icone del desktop si riducono utilizzando dconf alla voce
+     # Nautilus -> icon-view
    SHELL
 end
